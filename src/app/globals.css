@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
+  --background: #e5857e;
   --foreground: #1e293b;
   --font-fredoka: "Fredoka", sans-serif;
 }
@@ -16,7 +16,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
+    --background: #e5857e;
     --foreground: #f8fafc;
   }
 }
