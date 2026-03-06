@@ -1,10 +1,11 @@
-import { Letter } from "./letter";
+import { memo } from "react";
 
 import { getHash } from "@/lib/utils";
-
 import { COLORS } from "@/lib/constant";
 
-export function Word({ word }: { word: string }) {
+import { Letter } from "./letter";
+
+function PureWord({ word }: { word: string }) {
   return (
     <div className="flex gap-[0.15em] md:gap-[0.2em] items-center">
       {word.split("").map((char, index) => {
@@ -25,3 +26,5 @@ export function Word({ word }: { word: string }) {
     </div>
   );
 }
+
+export const Word = memo(PureWord);

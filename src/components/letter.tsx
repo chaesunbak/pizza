@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 export type LetterColor =
   | "pink"
   | "green"
@@ -15,7 +17,7 @@ const colorMap: Record<LetterColor, { text: string; side: string }> = {
   yellow: { text: "#FFE94D", side: "#C2A821" },
 };
 
-export function Letter({
+function PureLetter({
   char,
   rotate,
   color,
@@ -50,3 +52,5 @@ export function Letter({
     </span>
   );
 }
+
+export const Letter = memo(PureLetter);
