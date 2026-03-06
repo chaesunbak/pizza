@@ -15,7 +15,7 @@ const colorMap: Record<LetterColor, { text: string; side: string }> = {
   yellow: { text: "#FFE94D", side: "#C2A821" },
 };
 
-export default function Letter({
+export function Letter({
   char,
   rotate,
   color,
