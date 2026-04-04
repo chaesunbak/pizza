@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-import { LetterInput } from "@/components/letter-input";
-import { Word } from "@/components/word";
+import { PizzaApp } from "@/components/pizza-app";
 
 type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -29,23 +28,19 @@ export async function generateMetadata({
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  // TODO : message, from이 5글자 초과할 수 있음, 영문자 이외의 문자 포함될수 있음
   const { message, from } = await searchParams;
 
-  const displayMessage = typeof message === "string" ? message : undefined;
+  const rawMessage = typeof message === "string" ? message : undefined;
+  const filteredMessage = rawMessage?.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  const displayMessage =
+    filteredMessage && filteredMessage.length === 5 ? filteredMessage : undefined;
+
   const displayFrom = typeof from === "string" ? from : undefined;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background font-sans transition-colors duration-500">
-      <main className="flex flex-col items-center gap-8">
-        {displayMessage ? (
-          <>
-            <Word word={displayMessage} />
-            {displayFrom && <Word word={`from ${displayFrom}`} />}
-          </>
-        ) : (
-          <LetterInput />
-        )}
+    <div className="flex min-h-screen items-center justify-center bg-background font-sans transition-colors duration-500 overflow-hidden">
+      <main className="flex flex-col items-center justify-center w-full px-4">
+        <PizzaApp initialMessage={displayMessage} initialFrom={displayFrom} />
       </main>
     </div>
   );
