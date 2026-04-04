@@ -21,10 +21,14 @@ function PureLetter({
   char,
   rotate,
   color,
+  className,
+  style,
 }: {
   char: string;
   rotate: number;
   color: LetterColor;
+  className?: string;
+  style?: React.CSSProperties;
 }) {
   const selectedColor = colorMap[color];
 
@@ -33,7 +37,7 @@ function PureLetter({
     (_, i) => `0 ${i + 1}px 1px ${selectedColor.side}`,
   );
 
-  const style: React.CSSProperties = {
+  const letterStyle: React.CSSProperties = {
     color: selectedColor.text,
     transform: `rotate(${rotate}deg)`,
     textShadow: `
@@ -41,12 +45,13 @@ function PureLetter({
       0 ${shadowDepth + 4}px 10px rgba(0,0,0,0.2)
     `,
     WebkitFontSmoothing: "antialiased",
+    ...style,
   };
 
   return (
     <span
-      className="font-fredoka font-bold inline-block transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
-      style={style}
+      className={`font-fredoka font-bold inline-block transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${className ?? ""}`}
+      style={letterStyle}
     >
       {char}
     </span>
