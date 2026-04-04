@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTimeout } from "usehooks-ts";
 
 import { Letter } from "./letter";
@@ -9,7 +9,50 @@ import { Word } from "./word";
 import { getHash, cn } from "@/lib/utils";
 import { COLORS } from "@/lib/constant";
 
-export function LetterInput() {
+const KOREAN_MAPPING: Record<string, string> = {
+  // Consonants
+  ㄱ: "R",
+  ㄴ: "S",
+  ㄷ: "E",
+  ㄹ: "F",
+  ㅁ: "A",
+  ㅂ: "Q",
+  ㅅ: "T",
+  ㅇ: "D",
+  ㅈ: "W",
+  ㅊ: "C",
+  ㅋ: "Z",
+  ㅌ: "X",
+  ㅍ: "V",
+  ㅎ: "G",
+  // Vowels
+  ㅏ: "K",
+  ㅑ: "I",
+  ㅓ: "J",
+  ㅕ: "U",
+  ㅗ: "H",
+  ㅛ: "Y",
+  ㅜ: "N",
+  ㅠ: "B",
+  ㅡ: "M",
+  ㅣ: "L",
+  ㅐ: "O",
+  ㅔ: "P",
+  // Double Consonants / Vowels
+  ㄲ: "R",
+  ㄸ: "E",
+  ㅃ: "Q",
+  ㅆ: "T",
+  ㅉ: "W",
+  ㅒ: "O",
+  ㅖ: "P",
+};
+
+export function LetterInput({
+  onSubmit,
+}: {
+  onSubmit?: (text: string) => void;
+}) {
   const [text, setText] = useState("");
   const [warning, setWarning] = useState("");
   const [isShaking, setIsShaking] = useState(false);
@@ -21,7 +64,7 @@ export function LetterInput() {
   useTimeout(hideWarning, warning ? 2000 : null);
 
   const showWarning = () => {
-    setWarning("Sorry, Latin Letters only!");
+    setWarning("Sorry, English Letters and Numbers only!");
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 400);
   };
@@ -29,16 +72,21 @@ export function LetterInput() {
   const handleChange = ({
     target: { value: newValue },
   }: React.ChangeEvent<HTMLInputElement>) => {
-    // Check for non-English characters
-    if (/[^a-zA-Z]/.test(newValue)) {
+    // Map Korean characters to English equivalents
+    const mappedValue = Array.from(newValue)
+      .map((char) => KOREAN_MAPPING[char] || char)
+      .join("");
+
+    // Check for non-alphanumeric characters
+    if (/[^a-zA-Z0-9]/.test(mappedValue)) {
       showWarning();
     } else {
-      hideWarning(); // Hide warning if valid English is entered
+      hideWarning(); // Hide warning if valid alphanumeric is entered
     }
 
-    // Filter to keep only English letters and limit to 5 characters
-    const filtered = newValue
-      .replace(/[^a-zA-Z]/g, "")
+    // Filter to keep only English letters and numbers, and limit to 5 characters
+    const filtered = mappedValue
+      .replace(/[^a-zA-Z0-9]/g, "")
       .slice(0, 5)
       .toUpperCase();
     setText(filtered);
@@ -48,17 +96,30 @@ export function LetterInput() {
     inputRef.current?.focus();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && text.length === 5) {
+      onSubmit?.(text);
+    }
+  };
+
+  // 5글자 입력 시 자동으로 포커스 유지 및 엔터 유도
+  useEffect(() => {
+    if (text.length === 5) {
+      inputRef.current?.focus();
+    }
+  }, [text]);
+
   return (
     <div
-      className="flex flex-col items-center gap-8 md:gap-12 font-fredoka font-bold relative text-[clamp(2.2rem,12vw,7.5rem)] w-full px-6"
+      className="flex flex-col items-center gap-4 md:gap-6 font-fredoka font-bold relative text-[clamp(1.8rem,10vw,4rem)] w-full px-6"
       onClick={handleFocus}
     >
-      {/* 투명 input: 모바일 키보드 활성화를 위한 트릭 */}
       <input
         ref={inputRef}
         type="text"
         value={text}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         className="absolute w-0 h-0 opacity-0 pointer-events-none"
         autoFocus
         autoComplete="off"
@@ -100,7 +161,7 @@ export function LetterInput() {
         {/* 안내 메시지 - 메시지에만 shake 애니메이션 적용 */}
         <div
           className={cn(
-            "absolute -bottom-14 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-white/30 backdrop-blur-md border border-white/40 text-white text-xs md:text-base font-sans font-semibold shadow-lg transition-all pointer-events-none whitespace-nowrap z-10",
+            "fixed bottom-12 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-white/30 backdrop-blur-md border border-white/40 text-white text-xs md:text-sm font-sans font-semibold shadow-lg transition-all pointer-events-none whitespace-nowrap z-60",
             warning ? "opacity-100 translate-y-0 scale-100" : "opacity-0",
             isShaking && "animate-shake",
           )}
@@ -111,6 +172,28 @@ export function LetterInput() {
 
       <div className="cursor-text select-none">
         <Word word="Message" />
+      </div>
+
+      {/* 5글자 입력 시 나타나는 제출 버튼 - 화면 하단 고정 */}
+      <div
+        className={cn(
+          "fixed bottom-12 left-1/2 -translate-x-1/2 transition-all duration-500 z-50",
+          text.length === 5
+            ? "opacity-100 translate-y-0 scale-100"
+            : "opacity-0 translate-y-10 scale-90 pointer-events-none",
+        )}
+      >
+        <button
+          onClick={() => onSubmit?.(text)}
+          className="group relative px-8 py-4 bg-white text-black rounded-2xl font-fredoka text-2xl md:text-3xl shadow-[0_10px_0_0_#ddd,0_15px_20px_0_rgba(0,0,0,0.2)] active:shadow-none active:translate-y-[10px] transition-all hover:scale-105"
+        >
+          <span className="relative z-10 flex items-center gap-3">
+            ENTER TO SUBMIT
+            <span className="hidden md:inline-block px-2 py-1 bg-black/10 rounded text-sm font-sans font-bold">
+              ⏎
+            </span>
+          </span>
+        </button>
       </div>
     </div>
   );
