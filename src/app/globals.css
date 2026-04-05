@@ -179,3 +179,51 @@ button:not([disabled]),
     transform: scale(1);
   }
 }
+
+@keyframes pacman-move {
+  0% {
+    left: -20vw;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  80% {
+    left: 120vw;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  100% {
+    left: 120vw;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes letter-eat-1 {
+  0%, 18% { opacity: 1; transform: scale(1); }
+  19%, 90% { opacity: 0; transform: scale(0); }
+  95%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes letter-eat-2 {
+  0%, 26% { opacity: 1; transform: scale(1); }
+  27%, 90% { opacity: 0; transform: scale(0); }
+  95%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes letter-eat-3 {
+  0%, 34% { opacity: 1; transform: scale(1); }
+  35%, 90% { opacity: 0; transform: scale(0); }
+  95%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes letter-eat-4 {
+  0%, 42% { opacity: 1; transform: scale(1); }
+  43%, 90% { opacity: 0; transform: scale(0); }
+  95%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes letter-eat-5 {
+  0%, 50% { opacity: 1; transform: scale(1); }
+  51%, 90% { opacity: 0; transform: scale(0); }
+  95%, 100% { opacity: 1; transform: scale(1); }
+}
