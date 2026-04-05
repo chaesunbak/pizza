@@ -64,7 +64,7 @@ export function PizzaApp({
     if (status === "PLAYING") {
       const timer = setTimeout(() => {
         setStatus("RECEIVER_SUCCESS");
-      }, 30000); // 30 seconds of animation (6 scenes x 5s)
+      }, 45000); // 45 seconds of animation (9 scenes x 5s)
       return () => clearTimeout(timer);
     }
   }, [status]);
@@ -80,6 +80,7 @@ export function PizzaApp({
       {status === "PLAYING" && (
         <PizzaAnimation
           letters={message.split("").slice(0, 5) as MessageLetters}
+          message={message}
         />
       )}
 

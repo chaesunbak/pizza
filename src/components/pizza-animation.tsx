@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { PizzaGridScene } from "./scenes/pizza-grid-scene";
 import { PizzaDiagonalScene } from "./scenes/pizza-diagonal-scene";
@@ -11,6 +11,7 @@ import { PacmanScene } from "./scenes/pacman-scene";
 import { PizzaCircleScene } from "./scenes/pizza-circle-scene";
 import { PizzaSpiralScene } from "./scenes/pizza-spiral-scene";
 import { PizzaGiantScene } from "./scenes/pizza-giant-scene";
+import { getDeterministicShuffle } from "@/lib/utils";
 
 import type { MessageLetters } from "@/types";
 
@@ -28,37 +29,44 @@ const SCENES = [
 
 import { MusicPlayer } from "./music-player";
 
-function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
+function PizzaAnimationContent({
+  letters,
+  message,
+}: {
+  letters: MessageLetters;
+  message: string;
+}) {
   const searchParams = useSearchParams();
   const isDev = searchParams.get("dev") === "true";
 
-  const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoSwitching, setIsAutoSwitching] = useState(true);
+
+  // Generate deterministic sequence of scenes
+  const sequence = useMemo(() => {
+    return getDeterministicShuffle(SCENES, message);
+  }, [message]);
 
   useEffect(() => {
     if (!isAutoSwitching) return;
-    if (SCENES.length <= 1) return;
 
     const intervalId = setInterval(() => {
-      setCurrentSceneIndex((prev) => {
-        // Find a random scene different from the current one
-        let nextIndex;
-        do {
-          nextIndex = Math.floor(Math.random() * SCENES.length);
-        } while (nextIndex === prev);
-        return nextIndex;
-      });
+      setCurrentIndex((prev) => (prev + 1) % sequence.length);
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, [isAutoSwitching]);
+  }, [isAutoSwitching, sequence.length]);
 
-  const SceneComponent = SCENES[currentSceneIndex].component;
+  const currentScene = isAutoSwitching
+    ? sequence[currentIndex]
+    : SCENES[currentIndex]; // In manual mode, we use the original SCENES index for simplicity in DevMenu
+
+  const SceneComponent = currentScene.component;
 
   const handleSelectScene = (id: string) => {
     const index = SCENES.findIndex((s) => s.id === id);
     if (index !== -1) {
-      setCurrentSceneIndex(index);
+      setCurrentIndex(index);
       setIsAutoSwitching(false);
     }
   };
@@ -67,7 +75,7 @@ function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
     <div className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
       {isDev && (
         <DevMenu
-          currentSceneId={SCENES[currentSceneIndex].id}
+          currentSceneId={currentScene.id}
           onSelect={handleSelectScene}
           isAuto={isAutoSwitching}
           onToggleAuto={() => setIsAutoSwitching((prev) => !prev)}
@@ -79,10 +87,16 @@ function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
   );
 }
 
-export function PizzaAnimation({ letters }: { letters: MessageLetters }) {
+export function PizzaAnimation({
+  letters,
+  message,
+}: {
+  letters: MessageLetters;
+  message: string;
+}) {
   return (
     <Suspense fallback={null}>
-      <PizzaAnimationContent letters={letters} />
+      <PizzaAnimationContent letters={letters} message={message} />
     </Suspense>
   );
 }
