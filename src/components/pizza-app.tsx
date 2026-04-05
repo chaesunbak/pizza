@@ -8,14 +8,7 @@ import { SenderSuccess } from "./sender-success";
 import { ReceiverSuccess } from "./receiver-success";
 
 import { useEasterEgg } from "@/hooks/use-easter-egg";
-import type { MessageLetters } from "@/types";
-
-type Status =
-  | "IDLE"
-  | "LOADING"
-  | "PLAYING"
-  | "SENDER_SUCCESS"
-  | "RECEIVER_SUCCESS";
+import type { MessageLetters, AppStatus } from "@/types";
 
 export function PizzaApp({
   initialMessage,
@@ -24,7 +17,7 @@ export function PizzaApp({
   initialMessage?: string;
   initialFrom?: string;
 }) {
-  const [status, setStatus] = useState<Status>(
+  const [status, setStatus] = useState<AppStatus>(
     initialMessage ? "LOADING" : "IDLE",
   );
   const [message, setMessage] = useState(initialMessage || "");

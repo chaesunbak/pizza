@@ -43,3 +43,10 @@ export type MessageLetters = [
   Alphanumeric,
   Alphanumeric,
 ];
+
+export type AppStatus =
+  | "IDLE"
+  | "LOADING"
+  | "PLAYING"
+  | "SENDER_SUCCESS"
+  | "RECEIVER_SUCCESS";
