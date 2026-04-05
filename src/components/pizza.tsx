@@ -1,9 +1,18 @@
 import Image from "next/image";
 import PizzaImage from "@/assets/images/pizza.webp";
+import { cn } from "@/lib/utils";
 
-export function Pizza() {
+interface PizzaProps {
+  className?: string;
+  size?: number;
+}
+
+export function Pizza({ className, size = 384 }: PizzaProps) {
   return (
-    <div className="relative w-64 h-64 md:w-96 md:h-96 animate-spin-extremely-slow">
+    <div 
+      className={cn("relative overflow-hidden", className)} 
+      style={{ width: size, height: size }}
+    >
       <Image
         src={PizzaImage}
         alt={`Pizza`}

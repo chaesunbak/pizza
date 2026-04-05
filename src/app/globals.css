@@ -38,13 +38,40 @@ body {
     animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   }
   .animate-spin-slow {
-    animation: spin 3s linear infinite;
+    animation: spin 5s linear infinite;
+  }
+  .animate-spin-slow-reverse {
+    animation: spin-reverse 5s linear infinite;
   }
   .animate-spin-extremely-slow {
     animation: spin 20s linear infinite;
   }
   .animate-bounce-slow {
     animation: bounce-slow 2s ease-in-out infinite;
+  }
+  .animate-marquee-right {
+    animation: marquee-right 10s linear infinite;
+  }
+  .animate-marquee-left {
+    animation: marquee-left 10s linear infinite;
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
@@ -74,6 +101,15 @@ body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }
 

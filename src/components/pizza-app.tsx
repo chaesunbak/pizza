@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { LetterInput } from "./letter-input";
 import { LoadingScreen } from "./loading-screen";
-import { PizzaAnimation, type Alphanumeric } from "./pizza-animation";
+import { PizzaAnimation } from "./pizza-animation";
+
+import type { MessageLetters } from "@/types";
 
 type Status = "IDLE" | "LOADING" | "PLAYING";
 
@@ -35,7 +37,7 @@ export function PizzaApp({
       )}
       {status === "PLAYING" && (
         <PizzaAnimation
-          letters={message.split("").slice(0, 5) as [Alphanumeric, Alphanumeric, Alphanumeric, Alphanumeric, Alphanumeric]}
+          letters={message.split("").slice(0, 5) as MessageLetters}
         />
       )}
     </>

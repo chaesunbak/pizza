@@ -1,27 +1,35 @@
 "use client";
 
-import { Pizza } from "./pizza";
+import { useState, useEffect } from "react";
+import { PizzaGridScene } from "./scenes/pizza-grid-scene";
 
-export type Alphanumeric =
-  | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M"
-  | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
-  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+import type { MessageLetters } from "@/types";
 
-interface PizzaAnimationProps {
-  letters: [Alphanumeric, Alphanumeric, Alphanumeric, Alphanumeric, Alphanumeric];
-}
+const SCENES = [
+  { id: "grid", component: PizzaGridScene },
+  // more scenes can be added here
+];
 
-export function PizzaAnimation({ letters }: PizzaAnimationProps) {
+export function PizzaAnimation({ letters }: { letters: MessageLetters }) {
+  const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
+
+  useEffect(() => {
+    // Logic for randomly switching scenes every 15 seconds
+    if (SCENES.length <= 1) return;
+
+    const intervalId = setInterval(() => {
+      const nextIndex = Math.floor(Math.random() * SCENES.length);
+      setCurrentSceneIndex(nextIndex);
+    }, 15000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const SceneComponent = SCENES[currentSceneIndex].component;
+
   return (
-    <div className="flex flex-col items-center justify-center gap-12 text-white h-screen">
-      <div className="relative w-64 h-64 md:w-96 md:h-96 animate-spin-extremely-slow">
-        <Pizza />
-      </div>
-      <div className="flex gap-2 text-4xl font-fredoka uppercase">
-        {letters.map((letter, i) => (
-          <span key={i}>{letter}</span>
-        ))}
-      </div>
+    <div className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+      <SceneComponent />
     </div>
   );
 }
