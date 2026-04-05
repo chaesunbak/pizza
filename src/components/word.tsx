@@ -1,13 +1,13 @@
 import { memo } from "react";
 
-import { getHash } from "@/lib/utils";
+import { getHash, cn } from "@/lib/utils";
 import { COLORS } from "@/lib/constant";
 
 import { Letter } from "./letter";
 
-function PureWord({ word }: { word: string }) {
+function PureWord({ word, className }: { word: string; className?: string }) {
   return (
-    <div className="flex gap-[0.15em] md:gap-[0.2em] items-center">
+    <div className={cn("flex gap-[0.15em] md:gap-[0.2em] items-center", className)}>
       {word.split("").map((char, index) => {
         if (char === " ")
           return <div key={index} className="w-[0.3em] md:w-[0.4em]" />;
