@@ -20,11 +20,11 @@ const fredoka = Fredoka({
 
 export const metadata: Metadata = {
   title: "PIZZA",
-  description: "Deliver a message with pizza",
+  description: "Deliver free pizza for your special one",
   metadataBase: new URL("https://pizza.chaesunbak.com"),
   openGraph: {
     title: "PIZZA",
-    description: "Deliver a message with pizza",
+    description: "Deliver free pizza for your special one",
     url: "/",
     siteName: "PIZZA",
     images: [
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PIZZA",
-    description: "Deliver a message with pizza",
+    description: "Deliver free pizza for your special one",
     images: ["/images/pizza.png"],
   },
 };
