@@ -17,23 +17,30 @@ export function SenderSuccess({
 
   const handleCheck = () => {
     const url = new URL(window.location.href);
-    url.search = "";
+    const isDev = url.searchParams.get("dev") === "true";
+
+    url.search = ""; // Clear existing params
     url.searchParams.set("message", message);
     if (from.trim()) {
       url.searchParams.set("from", from.trim());
+    }
+    if (isDev) {
+      url.searchParams.set("dev", "true");
     }
     window.location.href = url.toString();
   };
 
   const handleCopy = async () => {
-    // Use window.location.href to preserve the current path if deployed to a subpath
     const url = new URL(window.location.href);
+    const isDev = url.searchParams.get("dev") === "true";
+
     url.search = ""; // Clear existing params
-
     url.searchParams.set("message", message);
-
     if (from.trim()) {
       url.searchParams.set("from", from.trim());
+    }
+    if (isDev) {
+      url.searchParams.set("dev", "true");
     }
 
     try {
@@ -42,7 +49,6 @@ export function SenderSuccess({
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
-      // Fallback for non-secure contexts - can also use a temporary textarea
       alert(
         "Failed to copy directly. Please copy this link: " + url.toString(),
       );

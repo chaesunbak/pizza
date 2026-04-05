@@ -46,8 +46,17 @@ export function PizzaApp({
     setMessage("");
     setFrom("");
     setStatus("IDLE");
-    // Clear URL parameters without page reload
-    window.history.replaceState({}, "", window.location.pathname);
+
+    const url = new URL(window.location.href);
+    const isDev = url.searchParams.get("dev") === "true";
+
+    // Clear URL parameters but potentially preserve dev
+    const newUrl = new URL(window.location.pathname, window.location.origin);
+    if (isDev) {
+      newUrl.searchParams.set("dev", "true");
+    }
+
+    window.history.replaceState({}, "", newUrl.toString());
   };
 
   // Switch to success screen after animation
