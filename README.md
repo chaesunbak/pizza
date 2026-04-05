@@ -10,6 +10,15 @@ pnpm install
 pnpm run dev
 ```
 
+## Environment Variables
+
+No environment variables are required for local development.
+
+```plaintext
+# Google Analytics
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
 ## State Diagram
 
 ```mermaid
