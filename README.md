@@ -2,6 +2,14 @@
 
 [https://pizza.chaesunbak.com](https://pizza.chaesunbak.com/?message=hello&from=chaesunbak)
 
+## Getting Started
+
+```bash
+pnpm install
+
+pnpm run dev
+```
+
 ## State Diagram
 
 ```mermaid
