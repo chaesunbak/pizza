@@ -2,7 +2,9 @@
 
 import { Pizza } from "../pizza";
 
-export function PizzaGridScene() {
+import type { MessageLetters } from "@/types";
+
+export function PizzaGridScene({ letters: _ }: { letters?: MessageLetters }) {
   const rows = 4;
 
   return (

@@ -2,7 +2,13 @@
 
 import { Pizza } from "../pizza";
 
-export function PizzaSnowScene() {
+import type { MessageLetters } from "@/types";
+
+export function PizzaSnowScene({
+  letters: _,
+}: {
+  letters: MessageLetters;
+}) {
   const count = 40; // Dense enough for a snow effect
 
   return (

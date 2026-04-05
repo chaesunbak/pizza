@@ -9,7 +9,13 @@ const orbits = [
   { r: 580, d: 6, s: 100 },
 ];
 
-export function PizzaOrbitScene() {
+import type { MessageLetters } from "@/types";
+
+export function PizzaOrbitScene({
+  letters: _,
+}: {
+  letters?: MessageLetters;
+}) {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden bg-background/20"

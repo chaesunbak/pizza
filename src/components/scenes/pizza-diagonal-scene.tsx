@@ -2,7 +2,13 @@
 
 import { Pizza } from "../pizza";
 
-export function PizzaDiagonalScene() {
+import type { MessageLetters } from "@/types";
+
+export function PizzaDiagonalScene({
+  letters: _letters,
+}: {
+  letters: MessageLetters;
+}) {
   const rows = 12;
 
   return (

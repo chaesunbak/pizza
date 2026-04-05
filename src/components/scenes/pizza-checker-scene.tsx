@@ -2,7 +2,13 @@
 
 import { Pizza } from "../pizza";
 
-export function PizzaCheckerScene() {
+import type { MessageLetters } from "@/types";
+
+export function PizzaCheckerScene({
+  letters: _,
+}: {
+  letters?: MessageLetters;
+}) {
   const rows = 5;
   const cols = 5;
 

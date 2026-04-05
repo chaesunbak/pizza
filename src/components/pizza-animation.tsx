@@ -7,6 +7,7 @@ import { PizzaDiagonalScene } from "./scenes/pizza-diagonal-scene";
 import { PizzaSnowScene } from "./scenes/pizza-snow-scene";
 import { PizzaCheckerScene } from "./scenes/pizza-checker-scene";
 import { PizzaOrbitScene } from "./scenes/pizza-orbit-scene";
+import { PacmanScene } from "./scenes/pacman-scene";
 
 import type { MessageLetters } from "@/types";
 
@@ -16,6 +17,7 @@ const SCENES = [
   { id: "snow", name: "Snow", component: PizzaSnowScene },
   { id: "checker", name: "Checker", component: PizzaCheckerScene },
   { id: "orbit", name: "Orbit", component: PizzaOrbitScene },
+  { id: "pacman", name: "Pacman", component: PacmanScene },
 ];
 
 import { MusicPlayer } from "./music-player";
@@ -65,7 +67,7 @@ function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
           onToggleAuto={() => setIsAutoSwitching((prev) => !prev)}
         />
       )}
-      <SceneComponent />
+      <SceneComponent letters={letters} />
       <MusicPlayer />
     </div>
   );
