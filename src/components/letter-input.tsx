@@ -91,6 +91,7 @@ export function LetterInput({
       onClick={handleFocus}
     >
       <input
+        id="message"
         ref={inputRef}
         type="url"
         value={text}
