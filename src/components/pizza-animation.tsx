@@ -9,6 +9,7 @@ import { PizzaCheckerScene } from "./scenes/pizza-checker-scene";
 import { PizzaOrbitScene } from "./scenes/pizza-orbit-scene";
 import { PacmanScene } from "./scenes/pacman-scene";
 import { PizzaCircleScene } from "./scenes/pizza-circle-scene";
+import { PizzaSpiralScene } from "./scenes/pizza-spiral-scene";
 
 import type { MessageLetters } from "@/types";
 
@@ -20,6 +21,7 @@ const SCENES = [
   { id: "orbit", name: "Orbit", component: PizzaOrbitScene },
   { id: "pacman", name: "Pacman", component: PacmanScene },
   { id: "circle", name: "Circle", component: PizzaCircleScene },
+  { id: "spiral", name: "Spiral", component: PizzaSpiralScene },
 ];
 
 import { MusicPlayer } from "./music-player";
