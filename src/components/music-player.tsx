@@ -3,10 +3,22 @@
 import { useState, useRef, useEffect } from "react";
 
 const TRACKS = [
-  { name: "Cheese Gravity", path: "/audios/Cheese Gravity.mp3" },
-  { name: "Plastic Weather", path: "/audios/Plastic Weather.mp3" },
-  { name: "Salt-Plug Sky", path: "/audios/Salt-Plug Sky.mp3" },
-];
+  {
+    id: "cheese-gravity",
+    name: "Cheese Gravity",
+    path: "/audios/Cheese Gravity.mp3",
+  },
+  {
+    id: "plastic-weather",
+    name: "Plastic Weather",
+    path: "/audios/Plastic Weather.mp3",
+  },
+  {
+    id: "salt-plug-sky",
+    name: "Salt-Plug Sky",
+    path: "/audios/Salt-Plug Sky.mp3",
+  },
+] as const;
 
 export function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
