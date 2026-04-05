@@ -8,21 +8,27 @@ import { cn } from "@/lib/utils";
 export function Pizza({
   className,
   size = 384,
+  canHide = true,
 }: {
   className?: string;
   size?: number;
+  canHide?: boolean;
 }) {
   const [isVisible, setIsVisible] = useState(true);
 
   return (
     <div
       className={cn(
-        "relative overflow-hidden cursor-pointer pointer-events-auto transition-all duration-300 hover:scale-110 active:scale-95 select-none",
+        "relative overflow-hidden select-none transition-all duration-300",
+        canHide ? "cursor-pointer hover:scale-110 active:scale-95" : "cursor-default",
+        "pointer-events-auto",
         !isVisible && "opacity-0 pointer-events-none scale-0",
         className,
       )}
       style={{ width: size, height: size }}
-      onClick={() => setIsVisible(false)}
+      onClick={() => {
+        if (canHide) setIsVisible(false);
+      }}
     >
       <Image
         src={PizzaImage}
