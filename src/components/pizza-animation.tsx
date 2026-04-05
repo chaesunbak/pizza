@@ -6,6 +6,7 @@ import { PizzaGridScene } from "./scenes/pizza-grid-scene";
 import { PizzaDiagonalScene } from "./scenes/pizza-diagonal-scene";
 import { PizzaSnowScene } from "./scenes/pizza-snow-scene";
 import { PizzaCheckerScene } from "./scenes/pizza-checker-scene";
+import { PizzaOrbitScene } from "./scenes/pizza-orbit-scene";
 
 import type { MessageLetters } from "@/types";
 
@@ -14,6 +15,7 @@ const SCENES = [
   { id: "diagonal", name: "Diagonal", component: PizzaDiagonalScene },
   { id: "snow", name: "Snow", component: PizzaSnowScene },
   { id: "checker", name: "Checker", component: PizzaCheckerScene },
+  { id: "orbit", name: "Orbit", component: PizzaOrbitScene },
 ];
 
 function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
