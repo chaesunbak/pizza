@@ -59,6 +59,19 @@ export function LetterInput({
   const [isShaking, setIsShaking] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("/audios/mech-keyboard-02.mp3");
+  }, []);
+
+  const playSound = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {});
+    }
+  };
+
   const hideWarning = () => setWarning("");
 
   // warning 값이 있을 때만 2초 타이머 작동
@@ -90,7 +103,10 @@ export function LetterInput({
       .replace(/[^a-zA-Z0-9]/g, "")
       .slice(0, 5)
       .toUpperCase();
-    setText(filtered);
+
+    if (filtered !== text) {
+      setText(filtered);
+    }
   };
 
   const handleFocus = () => {
@@ -98,6 +114,14 @@ export function LetterInput({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Play sound for all "typing" keys, even if they don't change the text (like hitting character limit)
+    // We ignore modifier keys to avoid noise on Shift, Meta, etc.
+    if (!e.ctrlKey && !e.altKey && !e.metaKey && e.key.length === 1) {
+      playSound();
+    } else if (e.key === "Backspace" || e.key === "Enter") {
+      playSound();
+    }
+
     if (e.key === "Enter" && text.length === 5) {
       onSubmit?.(text);
     }
