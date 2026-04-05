@@ -1,6 +1,7 @@
 "use client";
 
 import { Word } from "./word";
+import { KeyboardButton } from "./keyboard-button";
 
 export function ReceiverSuccess({
   from,
@@ -33,14 +34,14 @@ export function ReceiverSuccess({
       </div>
 
       <div className="flex flex-col gap-4 w-full max-w-sm animate-in fade-in slide-in-from-bottom-12 delay-500 duration-1000 fill-mode-both">
-        <button
+        <KeyboardButton
           onClick={onReset}
-          className="group relative w-full py-5 bg-white text-black rounded-2xl font-fredoka text-xl md:text-2xl shadow-[0_8px_0_0_#ddd,0_12px_20px_0_rgba(0,0,0,0.1)] active:shadow-none active:translate-y-[8px] transition-all hover:scale-105"
+          className="w-full py-5 text-xl md:text-2xl"
         >
           <span className="flex items-center justify-center gap-3">
             SEND A MESSAGE TOO
           </span>
-        </button>
+        </KeyboardButton>
       </div>
     </div>
   );

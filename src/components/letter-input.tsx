@@ -5,6 +5,7 @@ import { useTimeout } from "usehooks-ts";
 
 import { Letter } from "./letter";
 import { Word } from "./word";
+import { KeyboardButton } from "./keyboard-button";
 
 import { getHash, cn } from "@/lib/utils";
 import { COLORS } from "@/lib/constant";
@@ -183,9 +184,9 @@ export function LetterInput({
             : "opacity-0 translate-y-10 scale-90 pointer-events-none",
         )}
       >
-        <button
+        <KeyboardButton
           onClick={() => onSubmit?.(text)}
-          className="group relative px-8 py-4 bg-white text-black rounded-2xl font-fredoka text-2xl md:text-3xl shadow-[0_10px_0_0_#ddd,0_15px_20px_0_rgba(0,0,0,0.2)] active:shadow-none active:translate-y-[10px] transition-all hover:scale-105"
+          className="px-8 py-4 text-2xl md:text-3xl"
         >
           <span className="relative z-10 flex items-center gap-3">
             ENTER TO SUBMIT
@@ -193,7 +194,7 @@ export function LetterInput({
               ⏎
             </span>
           </span>
-        </button>
+        </KeyboardButton>
       </div>
     </div>
   );

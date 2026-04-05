@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Word } from "./word";
-import { cn } from "@/lib/utils";
+import { KeyboardButton } from "./keyboard-button";
 
 export function SenderSuccess({
   message,
@@ -29,9 +29,9 @@ export function SenderSuccess({
     // Use window.location.href to preserve the current path if deployed to a subpath
     const url = new URL(window.location.href);
     url.search = ""; // Clear existing params
-    
+
     url.searchParams.set("message", message);
-    
+
     if (from.trim()) {
       url.searchParams.set("from", from.trim());
     }
@@ -43,7 +43,9 @@ export function SenderSuccess({
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
       // Fallback for non-secure contexts - can also use a temporary textarea
-      alert("Failed to copy directly. Please copy this link: " + url.toString());
+      alert(
+        "Failed to copy directly. Please copy this link: " + url.toString(),
+      );
     }
   };
 
@@ -55,7 +57,10 @@ export function SenderSuccess({
 
       <div className="flex flex-col gap-6 w-full max-w-md animate-in fade-in slide-in-from-bottom-12 delay-300 duration-700 fill-mode-both">
         <div className="flex flex-col gap-2 text-left px-2">
-          <label htmlFor="from" className="text-xs md:text-sm font-fredoka text-black/40 uppercase tracking-widest font-bold">
+          <label
+            htmlFor="from"
+            className="text-xs md:text-sm font-fredoka text-black/40 uppercase tracking-widest font-bold"
+          >
             Who is this pizza from? (optional)
           </label>
           <input
@@ -65,41 +70,26 @@ export function SenderSuccess({
             onChange={(e) => setFrom(e.target.value)}
             placeholder="Your name"
             className="w-full px-6 py-4 bg-white/50 border-2 border-dashed border-black/10 rounded-2xl font-fredoka text-xl focus:outline-none focus:border-orange-400 focus:bg-white transition-all duration-300 placeholder:text-black/20"
+            autoComplete="off"
           />
         </div>
 
-        <button
+        <KeyboardButton
           onClick={handleCopy}
-          className={cn(
-            "group relative w-full py-5 rounded-2xl font-fredoka text-xl md:text-2xl transition-all duration-300 transform active:scale-95",
-            copied
-              ? "bg-green-500 text-white shadow-[0_8px_0_0_#16a34a,0_12px_20px_0_rgba(34,197,94,0.3)]"
-              : "bg-white text-black shadow-[0_8px_0_0_#ddd,0_12px_20px_0_rgba(0,0,0,0.1)] hover:scale-105",
-          )}
+          variant={copied ? "success" : "white"}
+          className="w-full py-5 text-xl md:text-2xl"
         >
           <span className="flex items-center justify-center gap-3">
-            {copied ? (
-              <>
-                COPIED!
-                <span className="text-2xl">✓</span>
-              </>
-            ) : (
-              <>
-                COPY TO CLIPBOARD
-                <span className="text-2xl group-hover:rotate-12 transition-transform">
-                  📋
-                </span>
-              </>
-            )}
+            {copied ? <>COPIED!</> : <>COPY TO CLIPBOARD</>}
           </span>
-        </button>
+        </KeyboardButton>
 
         <button
           onClick={handleCheck}
           className="group w-full py-4 rounded-xl font-fredoka text-lg md:text-xl text-black/60 hover:text-black hover:bg-black/5 transition-all duration-200"
         >
           <span className="flex items-center justify-center gap-2">
-            Check before sharing
+            Wanna try before sharing?
             <span className="group-hover:translate-x-1 transition-transform">
               →
             </span>
