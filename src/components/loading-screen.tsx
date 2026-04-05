@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useInterval } from "usehooks-ts";
+import { useInterval } from "@/hooks/common";
 
 const MESSAGES = [
   "BAKING PIZZA...",

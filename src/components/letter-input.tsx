@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useTimeout } from "usehooks-ts";
+import { useTimeout } from "@/hooks/common";
 
 import { Letter } from "./letter";
 import { Word } from "./word";
