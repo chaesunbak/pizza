@@ -55,6 +55,9 @@ body {
   .animate-marquee-left {
     animation: marquee-left 10s linear infinite;
   }
+  .animate-falling-snow {
+    animation: falling-snow 10s linear infinite;
+  }
 }
 
 @keyframes marquee-right {
@@ -110,6 +113,24 @@ body {
   }
   to {
     transform: rotate(-360deg);
+  }
+}
+
+@keyframes falling-snow {
+  0% {
+    transform: translateY(-20vh) translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(10vh) translateX(80px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(40vh) translateX(-80px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(70vh) translateX(80px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(110vh) translateX(0) rotate(360deg);
   }
 }
 
