@@ -15,7 +15,7 @@ export function MusicPlayer() {
   useEffect(() => {
     // Randomly select one of the three tracks once on mount
     const selectedTrack = TRACKS[Math.floor(Math.random() * TRACKS.length)];
-    
+
     const audio = new Audio(selectedTrack.path);
     audio.loop = true;
     audioRef.current = audio;
@@ -33,7 +33,9 @@ export function MusicPlayer() {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(err => console.error("Playback failed:", err));
+      audioRef.current
+        .play()
+        .catch((err) => console.error("Playback failed:", err));
       setIsPlaying(true);
     }
   };
@@ -43,8 +45,8 @@ export function MusicPlayer() {
       <button
         onClick={togglePlay}
         className={`group relative flex items-center gap-3 px-4 py-2.5 rounded-full transition-all duration-500 ${
-          isPlaying 
-            ? "bg-white/10 backdrop-blur-md border border-white/20 shadow-lg" 
+          isPlaying
+            ? "bg-white/10 backdrop-blur-md border border-white/20 shadow-lg"
             : "bg-black/20 backdrop-blur-sm border border-white/5 hover:bg-black/30"
         }`}
       >
@@ -57,23 +59,21 @@ export function MusicPlayer() {
               <div className="w-[3px] bg-white animate-[music-bar_0.7s_ease-in-out_infinite_0.2s]" />
             </div>
           ) : (
-            <svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
               className="w-4 h-4 text-white/40"
             >
-              <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" opacity="0.3" />
+              <polygon
+                points="5 3 19 12 5 21 5 3"
+                fill="currentColor"
+                opacity="0.3"
+              />
             </svg>
           )}
         </div>
-
-        <span className={`text-xs font-medium tracking-tight transition-colors duration-300 ${
-          isPlaying ? "text-white" : "text-white/40"
-        }`}>
-          {isPlaying ? "Playing" : "Muted"}
-        </span>
 
         {/* Subtle background glow when playing - reduced for a cleaner look */}
         {isPlaying && (
@@ -83,11 +83,15 @@ export function MusicPlayer() {
 
       <style jsx global>{`
         @keyframes music-bar {
-          0%, 100% { height: 4px; }
-          50% { height: 12px; }
+          0%,
+          100% {
+            height: 4px;
+          }
+          50% {
+            height: 12px;
+          }
         }
       `}</style>
     </div>
   );
 }
-
