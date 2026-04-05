@@ -169,7 +169,7 @@ export function LetterInput({
           className="px-8 py-4 text-2xl md:text-3xl"
         >
           <span className="relative z-10 flex items-center gap-3">
-            ENTER TO ORDER
+            ORDER
             <span className="hidden md:inline-block px-2 py-1 bg-black/10 rounded text-sm font-sans font-bold">
               ⏎
             </span>
