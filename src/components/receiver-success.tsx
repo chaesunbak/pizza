@@ -7,11 +7,9 @@ import { sendGAEvent } from "@next/third-parties/google";
 export function ReceiverSuccess({
   from,
   message,
-  onReset,
 }: {
   from?: string;
   message: string;
-  onReset: () => void;
 }) {
   const displayFrom = from ? from : "SOMEBODY";
 
@@ -20,7 +18,17 @@ export function ReceiverSuccess({
       value: message,
       from: from || null,
     });
-    onReset();
+
+    const url = new URL(window.location.href);
+    const isDev = url.searchParams.get("dev") === "true";
+
+    // Navigate to base path to clear initialMessage/initialFrom props
+    const newUrl = new URL("/", window.location.origin);
+    if (isDev) {
+      newUrl.searchParams.set("dev", "true");
+    }
+
+    window.location.href = newUrl.toString();
   };
 
   return (

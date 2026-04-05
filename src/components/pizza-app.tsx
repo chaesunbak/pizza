@@ -52,23 +52,6 @@ export function PizzaApp({
     sendGAEvent("event", "loading_started", { value: text });
   };
 
-  const handleReset = () => {
-    setMessage("");
-    setFrom("");
-    setStatus("IDLE");
-
-    const url = new URL(window.location.href);
-    const isDev = url.searchParams.get("dev") === "true";
-
-    // Clear URL parameters but potentially preserve dev
-    const newUrl = new URL(window.location.pathname, window.location.origin);
-    if (isDev) {
-      newUrl.searchParams.set("dev", "true");
-    }
-
-    window.history.replaceState({}, "", newUrl.toString());
-  };
-
   useEasterEgg();
 
   // Switch to success screen after animation
@@ -100,7 +83,7 @@ export function PizzaApp({
       )}
 
       {status === "RECEIVER_SUCCESS" && (
-        <ReceiverSuccess from={from} message={message} onReset={handleReset} />
+        <ReceiverSuccess from={from} message={message} />
       )}
     </>
   );
