@@ -8,7 +8,7 @@ import { Word } from "./word";
 import { KeyboardButton } from "./keyboard-button";
 
 import { getHash, cn } from "@/lib/utils";
-import { COLORS, KOREAN_MAPPING } from "@/lib/constant";
+import { COLORS } from "@/lib/constant";
 
 export function LetterInput({
   onSubmit,
@@ -44,30 +44,23 @@ export function LetterInput({
     setTimeout(() => setIsShaking(false), 400);
   };
 
-  const handleChange = ({
-    target: { value: newValue },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    // Map Korean characters to English equivalents
-    const mappedValue = Array.from(newValue)
-      .map((char) => KOREAN_MAPPING[char] || char)
-      .join("");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.toUpperCase();
 
-    // Check for non-alphanumeric characters
-    if (/[^a-zA-Z0-9]/.test(mappedValue)) {
+    // Filter: only allow A-Z and 0-9
+    const filteredValue = rawValue.replace(/[^A-Z0-9]/g, "").slice(0, 5);
+
+    // If the length increased, play sound
+    if (filteredValue.length > text.length) {
+      playSound();
+      hideWarning();
+    }
+    // If we filtered out some characters that the user tried to type
+    else if (rawValue.length > 0 && /[^A-Z0-9]/.test(rawValue)) {
       showWarning();
-    } else {
-      hideWarning(); // Hide warning if valid alphanumeric is entered
     }
 
-    // Filter to keep only English letters and numbers, and limit to 5 characters
-    const filtered = mappedValue
-      .replace(/[^a-zA-Z0-9]/g, "")
-      .slice(0, 5)
-      .toUpperCase();
-
-    if (filtered !== text) {
-      setText(filtered);
-    }
+    setText(filteredValue);
   };
 
   const handleFocus = () => {
@@ -75,15 +68,12 @@ export function LetterInput({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // Play sound for all "typing" keys, even if they don't change the text (like hitting character limit)
-    // We ignore modifier keys to avoid noise on Shift, Meta, etc.
-    if (!e.ctrlKey && !e.altKey && !e.metaKey && e.key.length === 1) {
-      playSound();
-    } else if (e.key === "Backspace" || e.key === "Enter") {
+    if (e.key === "Backspace" && text.length > 0) {
       playSound();
     }
 
     if (e.key === "Enter" && text.length === 5) {
+      playSound();
       onSubmit?.(text);
     }
   };
@@ -102,7 +92,7 @@ export function LetterInput({
     >
       <input
         ref={inputRef}
-        type="text"
+        type="url"
         value={text}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
@@ -144,15 +134,20 @@ export function LetterInput({
           })}
         </div>
 
-        {/* 안내 메시지 - 메시지에만 shake 애니메이션 적용 */}
+        {/* 안내 메시지 - 항상 상단에 노출 */}
         <div
           className={cn(
-            "fixed bottom-12 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-white/30 backdrop-blur-md border border-white/40 text-white text-xs md:text-sm font-sans font-semibold shadow-lg transition-all pointer-events-none whitespace-nowrap z-60",
-            warning ? "opacity-100 translate-y-0 scale-100" : "opacity-0",
+            "fixed top-12 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full bg-red-500/80 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-sans font-bold shadow-xl transition-all duration-300 pointer-events-none whitespace-nowrap z-60",
+            warning
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 -translate-y-4 scale-95",
             isShaking && "animate-shake",
           )}
         >
-          {warning}
+          <span className="flex items-center gap-2">
+            <span className="text-lg">⚠️</span>
+            {warning}
+          </span>
         </div>
       </div>
 
