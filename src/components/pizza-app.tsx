@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LetterInput } from "./letter-input";
 import { LoadingScreen } from "./loading-screen";
 import { PizzaAnimation } from "./pizza-animation";
 import { SenderSuccess } from "./sender-success";
 import { ReceiverSuccess } from "./receiver-success";
+import { sendGAEvent } from "@next/third-parties/google";
 
 import { useEasterEgg } from "@/hooks/use-easter-egg";
 import { useTimeout } from "@/hooks/common";
@@ -26,7 +27,17 @@ export function PizzaApp({
   const [message, setMessage] = useState(initialMessage || "");
   const [from, setFrom] = useState(initialFrom || "");
 
+  useEffect(() => {
+    if (initialMessage) {
+      sendGAEvent("event", "message_opened", {
+        value: initialMessage,
+        from: initialFrom || null,
+      });
+    }
+  }, [initialMessage, initialFrom]);
+
   const handleLoadingComplete = () => {
+    sendGAEvent("event", "loading_finished", { value: message });
     if (initialMessage) {
       setStatus("PLAYING");
     } else {
@@ -37,6 +48,8 @@ export function PizzaApp({
   const handleSubmit = (text: string) => {
     setMessage(text);
     setStatus("LOADING");
+    sendGAEvent("event", "message_created", { value: text });
+    sendGAEvent("event", "loading_started", { value: text });
   };
 
   const handleReset = () => {
@@ -60,7 +73,10 @@ export function PizzaApp({
 
   // Switch to success screen after animation
   useTimeout(
-    () => setStatus("RECEIVER_SUCCESS"),
+    () => {
+      setStatus("RECEIVER_SUCCESS");
+      sendGAEvent("event", "animation_completed", { value: message });
+    },
     status === "PLAYING" ? ANIMATION_DURATION : null,
   );
 

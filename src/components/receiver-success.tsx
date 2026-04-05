@@ -2,6 +2,7 @@
 
 import { Word } from "./word";
 import { KeyboardButton } from "./keyboard-button";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export function ReceiverSuccess({
   from,
@@ -13,6 +14,14 @@ export function ReceiverSuccess({
   onReset: () => void;
 }) {
   const displayFrom = from ? from : "SOMEBODY";
+
+  const handleReset = () => {
+    sendGAEvent("event", "restart_from_received", {
+      value: message,
+      from: from || null,
+    });
+    onReset();
+  };
 
   return (
     <div className="flex flex-col items-center gap-12 font-fredoka font-bold text-[clamp(1.2rem,6vw,2.5rem)] w-full px-6 py-20 text-center">
@@ -43,7 +52,7 @@ export function ReceiverSuccess({
         style={{ animationDelay: "1100ms" }}
       >
         <KeyboardButton
-          onClick={onReset}
+          onClick={handleReset}
           className="w-full py-5 text-xl md:text-2xl"
         >
           <span className="flex items-center justify-center gap-3">

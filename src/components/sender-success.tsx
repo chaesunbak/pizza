@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Word } from "./word";
 import { KeyboardButton } from "./keyboard-button";
 import { KOREAN_MAPPING } from "@/lib/constant";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export function SenderSuccess({
   message,
@@ -56,6 +57,10 @@ export function SenderSuccess({
     try {
       await navigator.clipboard.writeText(url.toString());
       setCopied(true);
+      sendGAEvent("event", "share_link_copied", {
+        value: message,
+        from: from || null,
+      });
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
