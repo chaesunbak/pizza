@@ -32,9 +32,8 @@ function PureLetter({
 }) {
   const selectedColor = colorMap[color];
 
-  const shadowDepth = 5;
-  const solidShadows = Array.from({ length: shadowDepth }).map(
-    (_, i) => `0 ${i + 1}px 1px ${selectedColor.side}`,
+  const solidShadows = Array.from({ length: 5 }).map(
+    (_, i) => `0 ${(i + 1) * 0.02}em 0 ${selectedColor.side}`,
   );
 
   const letterStyle: React.CSSProperties = {
@@ -42,7 +41,7 @@ function PureLetter({
     transform: `rotate(${rotate}deg)`,
     textShadow: `
       ${solidShadows.join(", ")},
-      0 ${shadowDepth + 4}px 10px rgba(0,0,0,0.2)
+      0 0.15em 0.2em rgba(0,0,0,0.2)
     `,
     WebkitFontSmoothing: "antialiased",
     ...style,
