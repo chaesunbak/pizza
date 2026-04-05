@@ -7,6 +7,7 @@ import { PizzaAnimation } from "./pizza-animation";
 import { SenderSuccess } from "./sender-success";
 import { ReceiverSuccess } from "./receiver-success";
 
+import { useEasterEgg } from "@/hooks/use-easter-egg";
 import type { MessageLetters } from "@/types";
 
 type Status =
@@ -59,6 +60,8 @@ export function PizzaApp({
     window.history.replaceState({}, "", newUrl.toString());
   };
 
+  useEasterEgg();
+
   // Switch to success screen after animation
   useEffect(() => {
     if (status === "PLAYING") {
@@ -85,11 +88,7 @@ export function PizzaApp({
       )}
 
       {status === "SENDER_SUCCESS" && (
-        <SenderSuccess
-          message={message}
-          from={from}
-          setFrom={setFrom}
-        />
+        <SenderSuccess message={message} from={from} setFrom={setFrom} />
       )}
 
       {status === "RECEIVER_SUCCESS" && (
