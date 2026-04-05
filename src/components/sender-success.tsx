@@ -16,6 +16,7 @@ export function SenderSuccess({
   setFrom: (name: string) => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [showCheck, setShowCheck] = useState(false);
 
   const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value;
@@ -57,6 +58,7 @@ export function SenderSuccess({
     try {
       await navigator.clipboard.writeText(url.toString());
       setCopied(true);
+      setShowCheck(true);
       sendGAEvent("event", "share_link_copied", {
         value: message,
         from: from || null,
@@ -101,17 +103,25 @@ export function SenderSuccess({
           className="w-full py-5 text-xl md:text-2xl"
         >
           <span className="flex items-center justify-center gap-3">
-            {copied ? <>COPIED!</> : <>COPY TO CLIPBOARD</>}
+            {copied ? (
+              <>COPIED! NOW YOU CAN SHARE IT!</>
+            ) : (
+              <>COPY TO CLIPBOARD</>
+            )}
           </span>
         </KeyboardButton>
 
         <button
           onClick={handleCheck}
-          className="group w-full py-4 rounded-xl font-fredoka text-lg md:text-xl text-black/60 hover:text-black hover:bg-black/5 transition-all duration-200"
+          className={`group w-full py-4 rounded-xl font-fredoka text-lg md:text-xl text-black/60 hover:text-black hover:bg-black/5 transition-all duration-500 ${
+            showCheck
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2 pointer-events-none"
+          }`}
         >
           <span className="flex items-center justify-center gap-2">
-            Wanna try before sharing?
-            <span className="group-hover:translate-x-1 transition-transform">
+            Wanna try some before sharing?
+            <span className="animate-bounce-x inline-block">
               →
             </span>
           </span>
