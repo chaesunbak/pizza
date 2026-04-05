@@ -33,6 +33,11 @@ body {
   font-family: var(--font-sans);
 }
 
+button:not([disabled]),
+[role="button"]:not([disabled]) {
+  cursor: pointer;
+}
+
 @layer utilities {
   .animate-shake {
     animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
@@ -64,7 +69,9 @@ body {
 }
 
 @keyframes flip {
-  0%, 100%, 50% {
+  0%,
+  100%,
+  50% {
     transform: rotateX(0deg);
   }
   25% {
