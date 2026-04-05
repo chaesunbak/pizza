@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Word } from "./word";
 import { KeyboardButton } from "./keyboard-button";
+import { KOREAN_MAPPING } from "@/lib/constant";
 
 export function SenderSuccess({
   message,
@@ -14,6 +15,15 @@ export function SenderSuccess({
   setFrom: (name: string) => void;
 }) {
   const [copied, setCopied] = useState(false);
+
+  const handleFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value;
+    const mappedValue = Array.from(rawValue)
+      .map((char) => KOREAN_MAPPING[char] || char)
+      .join("");
+    const filtered = mappedValue.replace(/[^a-zA-Z\s]/g, "");
+    setFrom(filtered);
+  };
 
   const handleCheck = () => {
     const url = new URL(window.location.href);
@@ -73,7 +83,7 @@ export function SenderSuccess({
             id="from"
             type="text"
             value={from}
-            onChange={(e) => setFrom(e.target.value)}
+            onChange={handleFromChange}
             placeholder="Your name"
             className="w-full px-6 py-4 bg-white/50 border-2 border-dashed border-black/10 rounded-2xl font-fredoka text-xl focus:outline-none focus:border-orange-400 focus:bg-white transition-all duration-300 placeholder:text-black/20"
             autoComplete="off"
