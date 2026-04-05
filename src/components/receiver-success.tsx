@@ -11,7 +11,7 @@ export function ReceiverSuccess({
   from?: string;
   message: string;
 }) {
-  const displayFrom = from ? from : "SOMEBODY";
+  const displayFrom = from ? from : "SOMEONE";
 
   const handleReset = () => {
     sendGAEvent("event", "restart_from_received", {
