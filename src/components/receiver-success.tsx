@@ -38,7 +38,8 @@ export function ReceiverSuccess({
           className="text-2xl text-white md:text-5xl font-fredoka font-bold tracking-wider min-h-[1.2em] opacity-0 animate-fade-up"
           style={{ animationDelay: "100ms" }}
         >
-          A MESSAGE HAS ARRIVED
+          <span className="block md:inline">A MESSAGE </span>
+          <span className="block md:inline">HAS ARRIVED</span>
         </h2>
         <h2
           className="text-2xl text-white md:text-5xl font-fredoka font-bold tracking-wider min-h-[1.2em] opacity-0 animate-fade-up"

@@ -128,8 +128,10 @@ export function SenderSuccess({
         </span>
       </div>
 
-      <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
-        <Word word="Your Pizza Is Ready!" />
+      <div className="flex flex-col items-center animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
+        <Word word="Your Pizza" className="md:hidden" />
+        <Word word="Is Ready!" className="md:hidden" />
+        <Word word="Your Pizza Is Ready!" className="hidden md:flex" />
       </div>
 
       <div className="flex flex-col gap-6 w-full max-w-md animate-in fade-in slide-in-from-bottom-12 delay-300 duration-700 fill-mode-both">
