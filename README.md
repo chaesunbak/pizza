@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍕 PIZZA
 
-## Getting Started
+[https://pizza.chaesunbak.com](https://pizza.chaesunbak.com/?message=hello&from=chaesunbak)
 
-First, run the development server:
+## State Diagram
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```mermaid
+stateDiagram-v2
+    [*] --> IDLE: No message in URL (Sender Flow)
+    [*] --> LOADING: Message found in URL (Receiver Flow)
+
+    state IDLE {
+        direction LR
+        [*] --> Input: Entry
+        Input --> Submit: user enters 5 chars
+    }
+
+    IDLE --> LOADING: User submits message
+
+    state LOADING {
+        direction LR
+        [*] --> Waiting
+        Waiting --> Complete: 2.5s delay
+    }
+
+    LOADING --> SENDER_SUCCESS: From IDLE submission
+    LOADING --> PLAYING: From initial URL message
+
+    state SENDER_SUCCESS {
+        direction LR
+        [*] --> PrepareLink: Set name & Copy
+        PrepareLink --> [*]: Share URL
+    }
+
+    SENDER_SUCCESS --> LOADING: "Try before sharing" (Reload)
+
+    state PLAYING {
+        direction LR
+        [*] --> PizzaAnimation
+        PizzaAnimation --> Finished: 45s scenes
+    }
+
+    PLAYING --> RECEIVER_SUCCESS: Animation finished
+
+    state RECEIVER_SUCCESS {
+        direction LR
+        [*] --> ViewMessage
+        ViewMessage --> Reset: Click "Send Mine Too"
+    }
+
+    RECEIVER_SUCCESS --> IDLE: Back to start
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
