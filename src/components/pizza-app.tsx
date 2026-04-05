@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LetterInput } from "./letter-input";
 import { LoadingScreen } from "./loading-screen";
 import { PizzaAnimation } from "./pizza-animation";
@@ -8,7 +8,10 @@ import { SenderSuccess } from "./sender-success";
 import { ReceiverSuccess } from "./receiver-success";
 
 import { useEasterEgg } from "@/hooks/use-easter-egg";
+import { useTimeout } from "@/hooks/common";
 import type { MessageLetters, AppStatus } from "@/types";
+
+const ANIMATION_DURATION = 45000; // 45 seconds of animation (9 scenes x 5s)
 
 export function PizzaApp({
   initialMessage,
@@ -56,14 +59,10 @@ export function PizzaApp({
   useEasterEgg();
 
   // Switch to success screen after animation
-  useEffect(() => {
-    if (status === "PLAYING") {
-      const timer = setTimeout(() => {
-        setStatus("RECEIVER_SUCCESS");
-      }, 45000); // 45 seconds of animation (9 scenes x 5s)
-      return () => clearTimeout(timer);
-    }
-  }, [status]);
+  useTimeout(
+    () => setStatus("RECEIVER_SUCCESS"),
+    status === "PLAYING" ? ANIMATION_DURATION : null,
+  );
 
   return (
     <>
