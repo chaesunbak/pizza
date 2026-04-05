@@ -82,7 +82,7 @@ export function SenderSuccess({
             htmlFor="from"
             className="text-xs md:text-sm font-fredoka text-black/40 uppercase tracking-widest font-bold"
           >
-            Who is this pizza from? (optional)
+            you can leave your name (if you want)
           </label>
           <input
             id="from"
