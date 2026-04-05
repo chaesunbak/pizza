@@ -18,6 +18,8 @@ const SCENES = [
   { id: "orbit", name: "Orbit", component: PizzaOrbitScene },
 ];
 
+import { MusicPlayer } from "./music-player";
+
 function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
   const searchParams = useSearchParams();
   const isDev = searchParams.get("dev") === "true";
@@ -64,6 +66,7 @@ function PizzaAnimationContent({ letters }: { letters: MessageLetters }) {
         />
       )}
       <SceneComponent />
+      <MusicPlayer />
     </div>
   );
 }
