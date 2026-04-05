@@ -1,7 +1,7 @@
 {
   "name": "pizza",
   "version": "0.1.0",
-  "packageManager": "npm@10.9.3",
+  "packageManager": "pnpm@10.30.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
