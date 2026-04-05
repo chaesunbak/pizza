@@ -58,6 +58,18 @@ body {
   .animate-falling-snow {
     animation: falling-snow 10s linear infinite;
   }
+  .animate-flip {
+    animation: flip 4s ease-in-out infinite;
+  }
+}
+
+@keyframes flip {
+  0%, 100%, 50% {
+    transform: rotateX(0deg);
+  }
+  25% {
+    transform: rotateX(180deg);
+  }
 }
 
 @keyframes marquee-right {
