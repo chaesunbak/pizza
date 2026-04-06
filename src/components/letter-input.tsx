@@ -87,7 +87,7 @@ export function LetterInput({
 
   return (
     <div
-      className="flex flex-col items-center gap-4 md:gap-6 font-fredoka font-bold relative text-[clamp(1.8rem,10vw,4rem)] w-full px-6"
+      className="flex flex-col items-center gap-4 md:gap-6 font-fredoka font-bold relative text-[clamp(1.8rem,10vw,4rem)] w-full px-6 -translate-y-[15vh] md:translate-y-0 transition-transform duration-500"
       onClick={handleFocus}
     >
       <input
@@ -138,7 +138,7 @@ export function LetterInput({
         {/* 안내 메시지 - 항상 상단에 노출 */}
         <div
           className={cn(
-            "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2 rounded-full bg-red-500/80 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-sans font-bold shadow-xl transition-all duration-300 pointer-events-none whitespace-nowrap z-60",
+            "fixed top-[20%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2 rounded-full bg-red-500/80 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-sans font-bold shadow-xl transition-all duration-300 pointer-events-none whitespace-nowrap z-60",
             warning
               ? "opacity-100 scale-100"
               : "opacity-0 scale-95",
