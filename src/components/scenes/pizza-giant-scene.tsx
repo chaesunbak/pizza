@@ -18,7 +18,7 @@ export function PizzaGiantScene({ letters }: { letters?: MessageLetters }) {
           <Pizza
             size={1200}
             canHide={false}
-            className="w-[98vw] h-[98vw] max-w-[1200px] max-h-[1200px] opacity-100 drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] transition-all duration-700"
+            className="w-[98vw] h-[98vw] max-w-300 max-h-300 opacity-100 drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] transition-all duration-700"
           />
 
           {/* Letters as Draggable Toppings */}

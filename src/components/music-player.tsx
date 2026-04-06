@@ -65,10 +65,10 @@ export function MusicPlayer() {
         {/* Visual Indicator */}
         <div className="relative flex items-center justify-center w-5 h-5">
           {isPlaying ? (
-            <div className="flex items-end gap-[2px] h-3">
-              <div className="w-[3px] bg-white animate-[music-bar_0.6s_ease-in-out_infinite]" />
-              <div className="w-[3px] bg-white animate-[music-bar_0.8s_ease-in-out_infinite_0.1s]" />
-              <div className="w-[3px] bg-white animate-[music-bar_0.7s_ease-in-out_infinite_0.2s]" />
+            <div className="flex items-end gap-0.5 h-3">
+              <div className="w-0.75 bg-white animate-[music-bar_0.6s_ease-in-out_infinite]" />
+              <div className="w-0.75 bg-white animate-[music-bar_0.8s_ease-in-out_infinite_0.1s]" />
+              <div className="w-0.75 bg-white animate-[music-bar_0.7s_ease-in-out_infinite_0.2s]" />
             </div>
           ) : (
             <svg
