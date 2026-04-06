@@ -110,7 +110,7 @@ function DraggableTopping({
         cursor: isDragging ? "grabbing" : "grab",
         touchAction: "none",
       }}
-      className={`pointer-events-auto transition-transform duration-75 ${isDragging ? "scale-110 z-10" : "hover:scale-105"}`}
+      className={`select-none pointer-events-auto transition-transform duration-75 ${isDragging ? "scale-110 z-10" : "hover:scale-105"}`}
     >
       <Letter
         char={char.toUpperCase()}
