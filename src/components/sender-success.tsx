@@ -147,7 +147,7 @@ export function SenderSuccess({
             onChange={handleFromChange}
             onKeyDown={handleKeyDown}
             placeholder="Your name"
-            className="w-full px-6 py-4 bg-white/50 border-2 border-dashed border-black/10 rounded-2xl font-fredoka text-xl focus:outline-none focus:border-orange-400 focus:bg-white transition-all duration-300 placeholder:text-black/20"
+            className="w-full px-6 py-4 bg-white/50 border-2 border-dashed border-black/10 rounded-2xl font-fredoka text-xl text-black focus:outline-none focus:border-orange-400 focus:bg-white transition-all duration-300 placeholder:text-black/40"
             autoComplete="off"
           />
         </div>
