@@ -116,9 +116,7 @@ export function SenderSuccess({
       <div
         className={cn(
           "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2 rounded-full bg-red-500/80 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-sans font-bold shadow-xl transition-all duration-300 pointer-events-none whitespace-nowrap z-60",
-          warning
-            ? "opacity-100 scale-100"
-            : "opacity-0 scale-95",
+          warning ? "opacity-100 scale-100" : "opacity-0 scale-95",
           isShaking && "animate-shake",
         )}
       >
@@ -161,7 +159,7 @@ export function SenderSuccess({
         >
           <span className="flex items-center justify-center gap-3">
             {copied ? (
-              <>COPIED! NOW YOU CAN SHARE IT!</>
+              <>COPIED! NOW YOU CAN SEND IT!</>
             ) : (
               <>COPY TO CLIPBOARD</>
             )}
