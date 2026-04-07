@@ -139,9 +139,7 @@ export function LetterInput({
         <div
           className={cn(
             "fixed top-[20%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-5 py-2 rounded-full bg-red-500/80 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-sans font-bold shadow-xl transition-all duration-300 pointer-events-none whitespace-nowrap z-60",
-            warning
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-95",
+            warning ? "opacity-100 scale-100" : "opacity-0 scale-95",
             isShaking && "animate-shake",
           )}
         >
@@ -153,29 +151,31 @@ export function LetterInput({
       </div>
 
       <div className="cursor-text select-none">
-        <Word word="Message" />
+        <Word word="MESSAGE" />
       </div>
 
-      {/* 5글자 입력 시 나타나는 제출 버튼 - 화면 하단 고정 */}
+      {/* 5글자 입력 시 나타나는 제출 버튼 - 이제 흐름에 맞게 배치 및 부드러운 애니메이션 */}
       <div
         className={cn(
-          "fixed bottom-12 left-1/2 -translate-x-1/2 transition-all duration-500 z-50",
-          text.length === 5
-            ? "opacity-100 translate-y-0 scale-100"
-            : "opacity-0 translate-y-10 scale-90 pointer-events-none",
+          "grid transition-[grid-template-rows] duration-500 ease-in-out w-full justify-center",
+          text.length === 5 ? "grid-rows-[1fr] opacity-100" : "opacity-0",
         )}
       >
-        <KeyboardButton
-          onClick={() => onSubmit?.(text)}
-          className="px-8 py-4 text-2xl md:text-3xl"
-        >
-          <span className="relative z-10 flex items-center gap-3">
-            ORDER
-            <span className="hidden md:inline-block px-2 py-1 bg-black/10 rounded text-sm font-sans font-bold">
-              ⏎
-            </span>
-          </span>
-        </KeyboardButton>
+        <div className="overflow-hidden flex flex-col items-center">
+          <div className="py-2 md:py-4">
+            <KeyboardButton
+              onClick={() => onSubmit?.(text)}
+              className="px-6 py-3 text-xl md:text-2xl"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                ORDER
+                <span className="inline-block px-1.5 py-0.5 bg-black/10 rounded text-xs font-sans font-bold translate-y-[-1px]">
+                  ⏎
+                </span>
+              </span>
+            </KeyboardButton>
+          </div>
+        </div>
       </div>
     </div>
   );
